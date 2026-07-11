@@ -91,7 +91,7 @@
 - (void)respring {
 
     NSTask *killallBackboardd = [NSTask new];
-    [killallBackboardd setLaunchPath:@"/usr/bin/killall"];
+    [killallBackboardd setLaunchPath:ROOT_PATH_NS(@"/usr/bin/killall")];
     [killallBackboardd setArguments:@[@"-9", @"backboardd"]];
     [killallBackboardd launch];
 
