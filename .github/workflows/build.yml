@@ -63,5 +63,5 @@ jobs:
         with:
           tag_name: v${{ steps.info.outputs.version }}
           name: ${{ steps.info.outputs.name }} ${{ steps.info.outputs.version }}
-          prerelease: ${{ github.ref != 'refs/heads/master' }}
+          prerelease: ${{ github.ref != 'refs/heads/main' }}
           files: packages/*.deb
