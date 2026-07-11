@@ -38,12 +38,11 @@ static NSString *dateStringFactory() {
 - (void)tapTapTipTapTimeGestureRecognizerDidFire {
 
 	dateShowing = !dateShowing; // Toggle
-	NSMutableDictionary *preferences = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.yulkytulky.taptaptiptaptime.plist"];
+	NSUserDefaults *preferences = [[NSUserDefaults alloc] initWithSuiteName:preferencesDomain];
 	[preferences setObject:[NSNumber numberWithBool:dateShowing] forKey:@"_dateShowing"];
 
 	NSDictionary *userInfo = @{ @"dateShowing": [NSNumber numberWithBool:dateShowing] };
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];
-	[preferences writeToFile:@"/var/mobile/Library/Preferences/com.yulkytulky.taptaptiptaptime.plist" atomically:YES];
 
 	if (autoResetEnabled) {
 		
@@ -60,12 +59,11 @@ static NSString *dateStringFactory() {
 - (void)timerFired:(NSTimer *)arg1 {
 
 	dateShowing = NO;
-	NSMutableDictionary *preferences = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.yulkytulky.taptaptiptaptime.plist"];
+	NSUserDefaults *preferences = [[NSUserDefaults alloc] initWithSuiteName:preferencesDomain];
 	[preferences setObject:@(dateShowing) forKey:@"_dateShowing"];
 
 	NSDictionary *userInfo = @{ @"dateShowing": @(dateShowing) };
 	[[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:userInfo];
-	[preferences writeToFile:@"/var/mobile/Library/Preferences/com.yulkytulky.taptaptiptaptime.plist" atomically:YES];
 }
 
 @end
@@ -107,7 +105,7 @@ static NSString *dateStringFactory() {
 
 static void loadPrefs() {
 
-	NSMutableDictionary *preferences = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.yulkytulky.taptaptiptaptime.plist"];
+	NSUserDefaults *preferences = [[NSUserDefaults alloc] initWithSuiteName:preferencesDomain];
 
 	enabled = [preferences objectForKey:@"enabled"] ? [[preferences objectForKey:@"enabled"] boolValue] : YES; // Default: Enabled
 
@@ -130,7 +128,7 @@ static void loadPrefs() {
 	loadPrefs(); // Load preferences into variables
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)loadPrefs, CFSTR("com.yulkytulky.taptaptiptaptime/saved"), NULL, CFNotificationSuspensionBehaviorCoalesce); // Listen for preference changes
 
-	NSMutableDictionary *preferences = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/com.yulkytulky.taptaptiptaptime.plist"];
+	NSUserDefaults *preferences = [[NSUserDefaults alloc] initWithSuiteName:preferencesDomain];
 	dateShowing = [preferences objectForKey:@"_dateShowing"] ? [[preferences objectForKey:@"_dateShowing"] boolValue] : NO;
 
 	if (enabled) {

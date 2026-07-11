@@ -15,6 +15,7 @@ BOOL autoResetEnabled;
 
 //--Globally Accessible Variables--//
 static BOOL dateShowing;
+static NSString *preferencesDomain = @"com.yulkytulky.taptaptiptaptime";
 static NSString *notificationName = @"com.yulkytulky.taptaptiptaptime/changedateshowing";
 static NSTimer *timer;
 
