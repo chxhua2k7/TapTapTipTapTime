@@ -2,7 +2,7 @@ include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = TapTapTipTapTimePreferences
 
-TapTapTipTapTimePreferences_FILES = TTTRootListController.m TTTRootHeaderView.m TTTSwitchCell.m
+TapTapTipTapTimePreferences_FILES = TTTRootListController.m TTTRootHeaderView.m TTTSwitchCell.m TTTEditTextCell.m
 TapTapTipTapTimePreferences_INSTALL_PATH = /Library/PreferenceBundles
 TapTapTipTapTimePreferences_FRAMEWORKS = UIKit CoreGraphics
 TapTapTipTapTimePreferences_PRIVATE_FRAMEWORKS = Preferences

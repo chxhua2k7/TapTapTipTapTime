@@ -1,18 +1,40 @@
 #import "TapTapTipTapTime.h"
 
+static NSDateFormatterStyle dateFormatterStyle() {
+
+	if ([dateStyle isEqualToString:@"numeric"]) return NSDateFormatterShortStyle;
+	if ([dateStyle isEqualToString:@"abbreviated"]) return NSDateFormatterMediumStyle;
+	if ([dateStyle isEqualToString:@"long"]) return NSDateFormatterLongStyle;
+	if ([dateStyle isEqualToString:@"complete"]) return NSDateFormatterFullStyle;
+	return NSDateFormatterShortStyle;
+
+}
+
 static NSString *dateStringFactory() {
 
-	NSMutableString *format = [NSMutableString stringWithString:@""];
-	if (dateShowing) {
-		dayBeforeMonth ? [format appendString:@"d M"] : [format appendString:@"M d"];
-		if (showYear) [format appendString:@" Y"];
-		[format replaceOccurrencesOfString:@" " withString:separator options:NSLiteralSearch range:NSMakeRange(0, [format length])];
-	} else {
-		twentyFourHourTime ? [format appendString:@"H:mm"] : [format appendString:@"h:mm"];
-		if (showAMPM) [format appendString:@" a"];
-	}
 	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	[formatter setDateFormat:format];
+	if (dateShowing) {
+		if ([dateStyle isEqualToString:@"custom"]) {
+			NSMutableString *format = [NSMutableString stringWithString:[customFormat length] > 0 ? customFormat : @"M/d/y"];
+			// D (day of year) and Y (week year) are almost never what the user means
+			[format replaceOccurrencesOfString:@"D" withString:@"d" options:NSLiteralSearch range:NSMakeRange(0, [format length])];
+			[format replaceOccurrencesOfString:@"Y" withString:@"y" options:NSLiteralSearch range:NSMakeRange(0, [format length])];
+			[formatter setDateFormat:format];
+		} else {
+			[formatter setDateStyle:dateFormatterStyle()];
+			[formatter setTimeStyle:NSDateFormatterNoStyle];
+		}
+	} else {
+		if (systemTime) {
+			[formatter setDateStyle:NSDateFormatterNoStyle];
+			[formatter setTimeStyle:NSDateFormatterShortStyle];
+		} else {
+			NSMutableString *format = [NSMutableString stringWithString:@""];
+			twentyFourHourTime ? [format appendString:@"H:mm"] : [format appendString:@"h:mm"];
+			if (showAMPM) [format appendString:@" a"];
+			[formatter setDateFormat:format];
+		}
+	}
 	return [formatter stringFromDate:[NSDate date]];
 
 }
@@ -109,12 +131,24 @@ static void loadPrefs() {
 
 	enabled = [preferences objectForKey:@"enabled"] ? [[preferences objectForKey:@"enabled"] boolValue] : YES; // Default: Enabled
 
+	systemTime = [preferences objectForKey:@"systemTime"] ? [[preferences objectForKey:@"systemTime"] boolValue] : YES; // Default: Follow system time format
 	showAMPM = [preferences objectForKey:@"showAMPM"] ? [[preferences objectForKey:@"showAMPM"] boolValue] : YES;
 	twentyFourHourTime = [preferences objectForKey:@"twentyFourHourTime"] ? [[preferences objectForKey:@"twentyFourHourTime"] boolValue] : NO;
 
+	dateStyle = [preferences objectForKey:@"dateStyle"] ? [preferences objectForKey:@"dateStyle"] : @"custom";
 	separator = [preferences objectForKey:@"separator"] ? [preferences objectForKey:@"separator"] : @"/";
 	showYear = [preferences objectForKey:@"showYear"] ? [[preferences objectForKey:@"showYear"] boolValue] : YES;
 	dayBeforeMonth = [preferences objectForKey:@"dayBeforeMonth"] ? [[preferences objectForKey:@"dayBeforeMonth"] boolValue] : NO;
+
+	if ([preferences objectForKey:@"customFormat"]) {
+		customFormat = [preferences objectForKey:@"customFormat"];
+	} else {
+		// Migrate from the legacy showYear/dayBeforeMonth/separator options
+		NSMutableString *format = [NSMutableString stringWithString:dayBeforeMonth ? @"d M" : @"M d"];
+		if (showYear) [format appendString:@" y"];
+		[format replaceOccurrencesOfString:@" " withString:separator options:NSLiteralSearch range:NSMakeRange(0, [format length])];
+		customFormat = format;
+	}
 
 	autoResetEnabled = [preferences objectForKey:@"autoResetEnabled"] ? [[preferences objectForKey:@"autoResetEnabled"] boolValue] : NO;
 

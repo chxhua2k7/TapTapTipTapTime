@@ -7,8 +7,9 @@ A jailbreak tweak for iOS 15+ (rootless). Tap the clock in the status bar to tog
 ## Features
 
 - Tap the status bar clock to toggle between time and date
-- Time options: show/hide AM/PM, 24-hour time
-- Date options: separator (`/`, `–`, `.`), show/hide year, day-before-month order
+- Time options: follow the system format (Language & Region), or set AM/PM and 24-hour time manually
+- Date format styles: Numeric, Abbreviated, Long, Complete (localized, matching [`Date.FormatStyle`](https://developer.apple.com/documentation/foundation/date/formatted(date:time:))), or Custom
+- Custom date format: type any date format pattern yourself (e.g. `EE/MM/dd/yyyy` → Sat/07/12/2026) using `E` weekday, `M` month, `MMM` month name, `d` day, `y` year
 - Optional auto reset: the date switches back to the time after 10 seconds
 - Preference pane in Settings with live updates (no respring needed, except for enable/disable)
 

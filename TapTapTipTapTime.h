@@ -4,12 +4,15 @@
 //--Preferences Variables--//
 BOOL enabled;
 
+BOOL systemTime;
 BOOL showAMPM;
 BOOL twentyFourHourTime;
 
+NSString *dateStyle;
+NSString *customFormat;
 NSString *separator;
-BOOL showYear;
-BOOL dayBeforeMonth;
+BOOL showYear; // Legacy, used to migrate to customFormat
+BOOL dayBeforeMonth; // Legacy, used to migrate to customFormat
 
 BOOL autoResetEnabled;
 

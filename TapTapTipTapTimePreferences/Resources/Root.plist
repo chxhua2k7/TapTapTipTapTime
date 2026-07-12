@@ -44,7 +44,25 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Time</string>
+			<key>footerText</key>
+			<string>Follow System Format uses your Language &amp; Region settings. Turn it off to set AM/PM and 24 hour time manually.</string>
 	  	</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>TTTSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.yulkytulky.taptaptiptaptime</string>
+			<key>key</key>
+			<string>systemTime</string>
+			<key>label</key>
+			<string>Follow System Format</string>
+			<key>PostNotification</key>
+			<string>com.yulkytulky.taptaptiptaptime/saved</string>
+		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
@@ -83,60 +101,60 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Date</string>
+			<key>footerText</key>
+			<string>Numeric, Abbreviated, Long, and Complete follow your Language &amp; Region settings. Custom Format is only used when Custom is selected. Tokens: E = weekday, M = month, MMM = month name, d = day, y = year. Anything else (/ – . spaces) is shown as-is. Example: EE/MM/dd/yyyy → Sat/07/12/2026</string>
 	  	</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSSegmentCell</string>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
 			<key>default</key>
-			<string>/</string>
+			<string>custom</string>
 			<key>defaults</key>
 			<string>com.yulkytulky.taptaptiptaptime</string>
 			<key>key</key>
-			<string>separator</string>
+			<string>dateStyle</string>
+			<key>label</key>
+			<string>Format Style</string>
 			<key>validValues</key>
 			<array>
-				<string>/</string>
-				<string>–</string>
-				<string>.</string>
+				<string>custom</string>
+				<string>numeric</string>
+				<string>abbreviated</string>
+				<string>long</string>
+				<string>complete</string>
 			</array>
 			<key>validTitles</key>
 			<array>
-				<string>/</string>
-				<string>–</string>
-				<string>.</string>
+				<string>Custom</string>
+				<string>Numeric (7/12/26)</string>
+				<string>Abbreviated (Jul 12, 2026)</string>
+				<string>Long (July 12, 2026)</string>
+				<string>Complete (Saturday, July 12, 2026)</string>
 			</array>
 			<key>PostNotification</key>
 			<string>com.yulkytulky.taptaptiptaptime/saved</string>
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSSwitchCell</string>
+			<string>PSEditTextCell</string>
 			<key>cellClass</key>
-			<string>TTTSwitchCell</string>
+			<string>TTTEditTextCell</string>
 			<key>default</key>
+			<string>M/d/y</string>
+			<key>defaults</key>
+			<string>com.yulkytulky.taptaptiptaptime</string>
+			<key>key</key>
+			<string>customFormat</string>
+			<key>label</key>
+			<string>Custom Format</string>
+			<key>placeholder</key>
+			<string>EE/MM/dd/yyyy</string>
+			<key>autoCaps</key>
+			<string>none</string>
+			<key>noAutoCorrect</key>
 			<true/>
-			<key>defaults</key>
-			<string>com.yulkytulky.taptaptiptaptime</string>
-			<key>key</key>
-			<string>showYear</string>
-			<key>label</key>
-			<string>Show Year</string>
-			<key>PostNotification</key>
-			<string>com.yulkytulky.taptaptiptaptime/saved</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>cellClass</key>
-			<string>TTTSwitchCell</string>
-			<key>default</key>
-			<false/>
-			<key>defaults</key>
-			<string>com.yulkytulky.taptaptiptaptime</string>
-			<key>key</key>
-			<string>dayBeforeMonth</string>
-			<key>label</key>
-			<string>Day Before Month</string>
 			<key>PostNotification</key>
 			<string>com.yulkytulky.taptaptiptaptime/saved</string>
 		</dict>
